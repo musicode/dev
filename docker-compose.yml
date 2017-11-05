@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+
+  mysql:
+    build:
+      context: ./mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - ./mysql/my.cnf:/etc/my.cnf
+      - ${DATA}/mysql:/var/data
+      - ${LOG}/mysql:/var/log
+      - ${TMP}/mysql:/var/tmp
+      - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+
+  # node:
+  #   build:
+  #     context: ./node
+  #   environment:
+  #     - EGG_SERVER_ENV=local
+  #   ports:
+  #       - "8080:7001"
+  #   volumes:
+  #     - ${APP}:/home/node/app
+  #   command: "npm run dev"
+  #
+  #
+  #
+  # redis:
+  #   build:
+  #     context: ./redis
+  #   volumes:
+  #     - ${DATA}/redis:/data
+  #     - ${LOG}/redis:/var/log/redis
+  #   ports:
+  #     - "6379:6379"

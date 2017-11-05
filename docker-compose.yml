@@ -19,24 +19,22 @@ services:
     ports:
       - "3306:3306"
 
-  # node:
-  #   build:
-  #     context: ./node
-  #   environment:
-  #     - EGG_SERVER_ENV=local
-  #   ports:
-  #       - "8080:7001"
-  #   volumes:
-  #     - ${APP}:/home/node/app
-  #   command: "npm run dev"
-  #
-  #
-  #
-  # redis:
-  #   build:
-  #     context: ./redis
-  #   volumes:
-  #     - ${DATA}/redis:/data
-  #     - ${LOG}/redis:/var/log/redis
-  #   ports:
-  #     - "6379:6379"
+  redis:
+    build:
+      context: ./redis
+    volumes:
+      - ${DATA}/redis:/data
+      - ${LOG}/redis:/var/log/redis
+    ports:
+      - "6379:6379"
+
+  node:
+    build:
+      context: ./node
+    environment:
+      - EGG_SERVER_ENV=local
+    ports:
+        - "8080:7001"
+    volumes:
+      - ${APP}:/home/node/app
+    command: "npm run dev"
